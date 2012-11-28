@@ -3,5 +3,9 @@
   "version" : "0.0.1",
   "scripts" : {
     "test" : "node test/index.js"
-  }
+  },
+  "licenses" : [{
+    "type" : "MIT",
+    "url" : "http://github.com/yssk22/mypackage/raw/master/LICENSE"
+  }]
 }
