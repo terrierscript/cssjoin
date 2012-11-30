@@ -1,0 +1,5 @@
+@import "parts2.css";
+@import "../base.css";
+.block{
+  color:red;
+}
