@@ -21,7 +21,11 @@ describe("css-include2",function(){
       done();
     });
   });
-  it("Twice time called")
+  it("Execute with option")
+  it("Resolve path test")
+  it("Can't resolve @import test")
+  it("Can't resolve @import test with error")  
   it("Create Map")
   it("Extend Test")
+  it("Twice time called")
 })
