@@ -1,11 +1,36 @@
 {
-  "name" : "css-include",
-  "version" : "0.0.1",
-  "scripts" : {
-    "test" : "node test/index.js"
+  "name": "css-inclusion",
+  "version": "0.0.1",
+  "description": "Extend css importing",
+  "main": "index.js",
+  "bin": {
+    "css-inclusion": "css-inclusion.js"
   },
-  "licenses" : [{
-    "type" : "MIT",
-    "url" : "http://github.com/yssk22/mypackage/raw/master/LICENSE"
-  }]
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "~1.7.3",
+    "should": "~1.2.1"
+  },
+  "scripts": {
+    "nyan": "node node_modules/mocha/bin/mocha --reporter nyan test",
+    "test": "node node_modules/mocha/bin/mocha --reporter spec test",
+    "devtest": "node node_modules/mocha/bin/mocha -w test",
+    "wocha": "node node_modules/wocha/wocha.js test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:suisho/css-inclusion.git"
+  },
+  "keywords": [
+    "css",
+    "import",
+    "include",
+    "extend"
+  ],
+  "author": "suisho",
+  "license": "BSD",
+  "readmeFilename": "README.md"
 }
