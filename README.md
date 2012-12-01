@@ -10,7 +10,7 @@ npm install css-include
 -->
 usage
 ```sh
-$ node bin/css-inclde.js some.css
+$ node bin/cssjoin.js some.css
 ```
 
 In node.js
