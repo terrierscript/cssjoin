@@ -6,8 +6,8 @@ var cp = require("child_process");
 
 describe("bin/cssjoin",function(){
   it("Execute", function(done){
-    cp.exec("node bin/cssjoin.js ./test/fixture/3/input/main.css",function(error, stdout, stderr){
-        var expect = fs.readFileSync("./test/fixture/3/output/main.css",'utf-8');
+    cp.exec("node bin/cssjoin.js ./test/fixture/basic/input/main.css",function(error, stdout, stderr){
+        var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
         assert.equal(expect,stdout);
         done();
       }
@@ -18,23 +18,23 @@ describe("bin/cssjoin",function(){
 describe("lib/cssjoin",function(){
   var cssJoin = require("../lib/cssjoin.js");
   it("Execute with no option",function(done){
-    cssJoin("./test/fixture/3/input/main.css", function(err,result){
-      var expect = fs.readFileSync("./test/fixture/3/output/main.css",'utf-8');
+    cssJoin("./test/fixture/basic/input/main.css", function(err,result){
+      var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
       assert.equal(expect, result);
       done();
     });
   });
   it("Execute with option",function(done){
-    cssJoin("./test/fixture/3/input/main.css",{debug :true }, function(err,result){
-      var expect = fs.readFileSync("./test/fixture/3/output/main.css",'utf-8');
+    cssJoin("./test/fixture/basic/input/main.css",{debug :true }, function(err,result){
+      var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
       assert.equal(expect, result);
       done();
     });
   });
   it("Resolve path test")
   it("Can't resolve @import test", function(done){
-    cssJoin("./test/fixture/5/input/main.css,",{debug :true }, function(err ,result){
-      var expect = fs.readFileSync("./test/fixture/5/output/main.css",'utf-8');
+    cssJoin("./test/fixture/cannot_import/input/main.css,",{debug :true }, function(err ,result){
+      var expect = fs.readFileSync("./test/fixture/cannot_import/output/main.css",'utf-8');
       //assert.equal(expect, result);
       done();
     });
@@ -75,10 +75,10 @@ describe("util", function(){
     assert.equal(result,expect)
   });
   it("Replace map",function(){
-    utils.getReplaceMapByFile("./test/fixture/2/dir/replace_map.css",[],function(err,result){
+    utils.getReplaceMapByFile("./test/fixture/replace_map_test/dir/replace_map.css",[],function(err,result){
       var expect = {
-        '@import "parts.css";' : "./test/fixture/2/dir/parts.css",
-        '@import "../base.css";' : "./test/fixture/2/base.css",
+        '@import "parts.css";' : "./test/fixture/replace_map_test/dir/parts.css",
+        '@import "../base.css";' : "./test/fixture/replace_map_test/base.css",
       }
       //assert length
       assert.equal(expect.length, result.length);
