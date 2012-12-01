@@ -2,6 +2,18 @@ var utils = require("../lib/util.js");
 var assert = require("assert");
 var path = require("path");
 var fs = require("fs");
+var cp = require("child_process");
+
+describe("bin/cssjoin",function(){
+  it("Execute", function(done){
+    cp.exec("node bin/cssjoin.js ./test/fixture/3/input/main.css",function(error, stdout, stderr){
+        var expect = fs.readFileSync("./test/fixture/3/output/main.css",'utf-8');
+        assert.equal(expect,stdout);
+        done();
+      }
+    );
+  });
+});
 
 describe("lib/cssjoin",function(){
   var cssJoin = require("../lib/cssjoin.js");

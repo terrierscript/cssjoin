@@ -4,20 +4,23 @@
   "description": "Extend css @import loaded file",
   "main": "index.js",
   "bin": {
-    "css-inclusion": "css-inclusion.js"
+    "cssjoin": "cssjoin.js"
   },
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "commander": "~1.1.1"
+  },
   "devDependencies": {
     "mocha": "~1.7.3",
     "should": "~1.2.1"
   },
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --reporter spec test",
-    "devtest": "node node_modules/mocha/bin/mocha -w test",
-    "wocha": "node node_modules/wocha/wocha.js test"
+    "test": "node node_modules/mocha/bin/mocha test --reporter spec",
+    "testd": "node node_modules/mocha/bin/mocha test -w --reporter nyan ",
+    "wocha": "node node_modules/wocha/wocha.js test",
+    "yaruo": "node node_modules/mocha/bin/mocha test -w --reporter mocha-yaruo-reporter"
   },
   "repository": {
     "type": "git",
