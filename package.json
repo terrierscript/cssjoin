@@ -1,7 +1,7 @@
 {
-  "name": "css-inclusion",
+  "name": "cssjoin",
   "version": "0.0.1",
-  "description": "Extend css importing",
+  "description": "Extend css @import loaded file",
   "main": "index.js",
   "bin": {
     "css-inclusion": "css-inclusion.js"
@@ -15,14 +15,13 @@
     "should": "~1.2.1"
   },
   "scripts": {
-    "nyan": "node node_modules/mocha/bin/mocha --reporter nyan test",
     "test": "node node_modules/mocha/bin/mocha --reporter spec test",
     "devtest": "node node_modules/mocha/bin/mocha -w test",
     "wocha": "node node_modules/wocha/wocha.js test"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:suisho/css-inclusion.git"
+    "url": "git://github.com/suisho/cssjoin.git"
   },
   "keywords": [
     "css",

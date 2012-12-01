@@ -12,10 +12,11 @@ describe("old css-include",function(){
   })
 });
 describe("css-include2",function(){
+  
+  var cssJoin = require("../lib/cssjoin.js");
+  
   it("Execute with no option",function(done){
-    var cssInclude2 = require("../lib/cssinclude2.js");
-    cssInclude2("./test/fixture/3/input/main.css",function(err,result){
-      
+    cssJoin("./test/fixture/3/input/main.css",function(err,result){
       var expect = fs.readFileSync("./test/fixture/3/output/main.css",'utf-8');
       assert.equal(expect, result);
       done();
