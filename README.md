@@ -9,8 +9,8 @@ npm install css-include
 ```
 -->
 usage
-```bash
-node bin/css-inclde.js some.css
+```sh
+$ node bin/css-inclde.js some.css
 ```
 
 In node.js
@@ -42,8 +42,8 @@ dir/parts.css
 ```
 
 ####And execute
-```bash
-node bin/css-inclde.js main.css
+```sh
+$ node bin/css-inclde.js main.css
 ```
 ### Output
 ```css
