@@ -3,17 +3,7 @@ var assert = require("assert");
 var path = require("path");
 var fs = require("fs");
 
-describe("old css-include",function(){
-  it("Test 1",function(done){
-    var index = require("../index.js");
-    index("./test/fixture/1/input/main.css",function(err,data){
-      var output = fs.readFileSync("./test/fixture/1/output/main.css", 'utf-8');
-      assert.equal(data,output);
-      done();
-    })
-  })
-});
-describe("css-include2",function(){
+describe("lib/cssjoin",function(){
   var cssJoin = require("../lib/cssjoin.js");
   it("Execute with no option",function(done){
     cssJoin("./test/fixture/3/input/main.css", function(err,result){
