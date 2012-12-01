@@ -1,19 +1,18 @@
-CssJoin
-====
+#CssJoin
 Join css that @import syntax loaded file.
 
-<!--
-instal
-```
-npm install css-include
-```
--->
-usage
+##Install
 ```sh
-$ node bin/cssjoin.js some.css
+$ npm install -g cssjoin
 ```
 
-In node.js
+##Usage
+Command line
+```sh
+$ cssjoin some.css
+```
+
+in node.js
 ```javascript
 var cssInclude = require('cssInclude');
 
@@ -23,16 +22,15 @@ cssInclude("sample.css",function(err,extendedCss){
 
 ```
 
-example
-------
+##Example
 ### Input
 main.css
 ```css
-  @import "dir/parts.css";
+@import "dir/parts.css";
 
-  .main{
-    float: left;
-  }
+.main{
+  float: left;
+}
 ```
 dir/parts.css
 ```css
