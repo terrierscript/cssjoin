@@ -3,11 +3,71 @@ var assert = require("assert");
 var path = require("path");
 var fs = require("fs");
 var cp = require("child_process");
+var cssJoin = require("../lib/cssjoin.js");
+
+var read = function(path){
+  return fs.readFileSync(path,'utf-8');
+}
+
+describe("resolve path", function(){
+  describe('util', function () {
+    it('resolve some pattern', function () {
+      var fileNamePattern = ["/parts.css" , "parts.css", "./parts.css"];
+      var resolvePathPattern = [
+        "./test/fixture/resolve_path/input/htdocs",
+        "./test/fixture/resolve_path/input/htdocs/",
+        "test/fixture/resolve_path/input/htdocs",
+        "test/fixture/resolve_path/input/htdocs/"
+      ];
+      for(var i=0; i < fileNamePattern.length; i++){
+        for(var j=0; j < resolvePathPattern.length; j++){
+          var result = utils.resolvePath(fileNamePattern[i], [resolvePathPattern[j]]);
+          assert.equal(result, "test/fixture/resolve_path/input/htdocs/parts.css");
+        }
+      }
+    });
+    it("cant resolve pattern", function(){
+      var result = utils.resolvePath("not.css",["./test/fixture/unknown"]);
+      assert.equal(result, null);
+    })
+  });
+  
+  // it("Execute with resolve path", function(done){    
+  //   var command = [
+  //     "node",
+  //     "bin/cssjoin.js",
+  //     "./test/fixture/resolve_path/input/main.css",
+  //     "-p ./test/fixture/resolve_path/"
+  //   ].join(" ");
+  //   cp.exec(command,
+  //     function(error, stdout, stderr){
+  //       var expect = read("./test/fixture/resolve_path/output/main.css");
+  //       assert.equal(stdout,expect);
+  //       done();
+  //     }
+  //   );
+  // });  
+  // 
+  /*it("Resolve path test", function(done){
+    var opt = {
+      debug : true,
+      paths :["./test/fixture/resolve_path/input/htdocs"]
+    };
+    cssJoin("./test/fixture/resolve_path/input/main.css", opt, 
+      function(err ,result){
+        var expect = read("./test/fixture/resolve_path/output/main.css");
+        assert.equal(expect, result);
+        done();
+      }
+    );
+  });*/
+})
 
 describe("bin/cssjoin",function(){
-  it("Execute", function(done){
-    cp.exec("node bin/cssjoin.js ./test/fixture/basic/input/main.css",function(error, stdout, stderr){
-        var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
+  it("Execute without option", function(done){
+    cp.exec("node bin/cssjoin.js ./test/fixture/basic/input/main.css",
+      function(error, stdout, stderr){
+        var expect = read("./test/fixture/basic/output/main.css");
         assert.equal(expect,stdout);
         done();
       }
@@ -16,47 +76,48 @@ describe("bin/cssjoin",function(){
 });
 
 describe("lib/cssjoin",function(){
-  var cssJoin = require("../lib/cssjoin.js");
   it("Execute with no option",function(done){
     cssJoin("./test/fixture/basic/input/main.css", function(err,result){
-      var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
+      var expect = read("./test/fixture/basic/output/main.css");
       assert.equal(expect, result);
       done();
     });
   });
   it("Execute with option",function(done){
     cssJoin("./test/fixture/basic/input/main.css",{}, function(err,result){
-      var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
+      var expect = read("./test/fixture/basic/output/main.css");
       assert.equal(expect, result);
       done();
     });
   });
-  it("Resolve path test", function(done){
-    var opt = {
-      paths :["./test/fixture/resolve_path/htdocs"]
-    };
-    cssJoin("./test/fixture/resolve_path/input/main.css",opt, function(err ,result){
-      var expect = fs.readFileSync("./test/fixture/resolve_path/output/main.css",'utf-8');
-      assert.equal(expect, result);
-      done();
-    });
-  })
   it("Can't resolve @import test", function(done){
     cssJoin("./test/fixture/cannot_import/input/main.css", 
       function(err ,result){
-        var expect = fs.readFileSync("./test/fixture/cannot_import/output/main.css",'utf-8');
+        var expect = read("./test/fixture/cannot_import/output/main.css");
         assert.equal(expect, result);
         done();
       }
     );
   });
+  
   it("Throw error option when can't resolve @import")  
   it("Create Map")
   it("Extend Test")
   it("Twice time called")
 })
 
+describe("lib/CssJoin Object", function () {
+  it("path option ", function(){
+    var CssJoin = cssJoin("", {paths : "/tmp"}, function(){});
+    assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+                    ["./test/fixture/simple","/tmp"]);
+  });
+});
+
+
 describe("util", function(){
+  
   it("Clone array",function(){
     var a = [1,2,3];
     var b = utils.cloneArray(a);
