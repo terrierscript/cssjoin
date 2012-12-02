@@ -25,21 +25,32 @@ describe("lib/cssjoin",function(){
     });
   });
   it("Execute with option",function(done){
-    cssJoin("./test/fixture/basic/input/main.css",{debug :true }, function(err,result){
+    cssJoin("./test/fixture/basic/input/main.css",{}, function(err,result){
       var expect = fs.readFileSync("./test/fixture/basic/output/main.css",'utf-8');
       assert.equal(expect, result);
       done();
     });
   });
-  it("Resolve path test")
-  it("Can't resolve @import test", function(done){
-    cssJoin("./test/fixture/cannot_import/input/main.css,",{debug :true }, function(err ,result){
-      var expect = fs.readFileSync("./test/fixture/cannot_import/output/main.css",'utf-8');
-      //assert.equal(expect, result);
+  it("Resolve path test", function(done){
+    var opt = {
+      paths :["./test/fixture/resolve_path/htdocs"]
+    };
+    cssJoin("./test/fixture/resolve_path/input/main.css",opt, function(err ,result){
+      var expect = fs.readFileSync("./test/fixture/resolve_path/output/main.css",'utf-8');
+      assert.equal(expect, result);
       done();
     });
+  })
+  it("Can't resolve @import test", function(done){
+    cssJoin("./test/fixture/cannot_import/input/main.css", 
+      function(err ,result){
+        var expect = fs.readFileSync("./test/fixture/cannot_import/output/main.css",'utf-8');
+        assert.equal(expect, result);
+        done();
+      }
+    );
   });
-  it("Can't resolve @import test with error")  
+  it("Throw error option when can't resolve @import")  
   it("Create Map")
   it("Extend Test")
   it("Twice time called")
