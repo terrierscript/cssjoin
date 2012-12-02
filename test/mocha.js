@@ -3,26 +3,57 @@ var assert = require("assert");
 var path = require("path");
 var fs = require("fs");
 var cp = require("child_process");
+var os = require("os");
+
 var cssJoin = require("../lib/cssjoin.js");
 
 var read = function(path){
   return fs.readFileSync(path,'utf-8');
 }
 
+var isWindows = function(){
+  return os.type().match(/Windows/);
+}
+
+describe("lib/CssJoin Object", function () {
+  it("path option ", function(){
+    // none
+    var CssJoin = cssJoin("", {}, function(){});
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+                    ["./test/fixture/simple"]);
+    // string
+    var CssJoin = cssJoin("", {paths : "/tmp"}, function(){});
+    assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+                    ["./test/fixture/simple","/tmp"]);
+    // array 
+    var CssJoin = cssJoin("", {paths : ["/tmp"]}, function(){});
+    assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+                    ["./test/fixture/simple","/tmp"]);
+  });
+});
+
 describe("resolve path", function(){
   describe('util', function () {
     it('resolve some pattern', function () {
       var fileNamePattern = ["/parts.css" , "parts.css", "./parts.css"];
       var resolvePathPattern = [
-        "./test/fixture/resolve_path/input/htdocs",
-        "./test/fixture/resolve_path/input/htdocs/",
-        "test/fixture/resolve_path/input/htdocs",
-        "test/fixture/resolve_path/input/htdocs/"
+        ["./test/fixture/resolve_path/input/htdocs"],
+        ["./test/fixture/resolve_path/input/htdocs/"],
+        ["test/fixture/resolve_path/input/htdocs"],
+        ["test/fixture/resolve_path/input/htdocs/"],
+        [".","./test/fixture/resolve_path/input/htdocs/"],
+        ["./test/fixture/resolve_path/input","./test/fixture/resolve_path/input/htdocs/"],
       ];
+      var expected = "test/fixture/resolve_path/input/htdocs/parts.css";
+      if(isWindows()){
+        expected = "test\\fixture\\resolve_path\\input\\htdocs\\parts.css";
+      }
       for(var i=0; i < fileNamePattern.length; i++){
         for(var j=0; j < resolvePathPattern.length; j++){
-          var result = utils.resolvePath(fileNamePattern[i], [resolvePathPattern[j]]);
-          assert.equal(result, "test/fixture/resolve_path/input/htdocs/parts.css");
+          var result = utils.resolvePath(fileNamePattern[i], resolvePathPattern[j]);
+          assert.equal(result, expected);
         }
       }
     });
@@ -31,36 +62,49 @@ describe("resolve path", function(){
       assert.equal(result, null);
     })
   });
-  
-  // it("Execute with resolve path", function(done){    
-  //   var command = [
-  //     "node",
-  //     "bin/cssjoin.js",
-  //     "./test/fixture/resolve_path/input/main.css",
-  //     "-p ./test/fixture/resolve_path/"
-  //   ].join(" ");
-  //   cp.exec(command,
-  //     function(error, stdout, stderr){
-  //       var expect = read("./test/fixture/resolve_path/output/main.css");
-  //       assert.equal(stdout,expect);
-  //       done();
-  //     }
-  //   );
-  // });  
-  // 
-  /*it("Resolve path test", function(done){
-    var opt = {
-      debug : true,
-      paths :["./test/fixture/resolve_path/input/htdocs"]
-    };
-    cssJoin("./test/fixture/resolve_path/input/main.css", opt, 
-      function(err ,result){
-        var expect = read("./test/fixture/resolve_path/output/main.css");
-        assert.equal(expect, result);
-        done();
-      }
-    );
-  });*/
+  describe('lib', function () {
+    it("Resolve path test", function(done){
+      var opt = {
+        paths : [
+          "./test/fixture/resolve_path/input/htdocs",
+          "./test/fixture/resolve_path/input/htdocs2",
+        ]
+      };
+      cssJoin("./test/fixture/resolve_path/input/main.css", opt, 
+        function(err ,result){
+          var expect = read("./test/fixture/resolve_path/output/main.css");
+          assert.equal(expect, result);
+          done();
+        }
+      );
+    });
+  });
+  describe("Bin execute with resolve path", function(){
+    var command = [
+      "node",
+      "bin/cssjoin.js",
+      "./test/fixture/resolve_path/input/main.css",
+    ]
+    if(isWindows()){
+      var paths = "./test/fixture/resolve_path/input/htdocs;"
+                +"./test/fixture/resolve_path/input/htdocs2";
+    }else{
+      var paths = "./test/fixture/resolve_path/input/htdocs:"
+                +"./test/fixture/resolve_path/input/htdocs2";
+    }
+    var params = ["-p","--path","--include-path"];
+    params.forEach(function(param){
+      var _command = command.join(" ")+" "+param+" "+paths;
+      it(param, function(done){
+        //console.log(_command);
+        cp.exec(_command,function(error, stdout, stderr){
+          var expect = read("./test/fixture/resolve_path/output/main.css");
+          assert.equal(stdout,expect);
+          done();
+        });
+      });
+    });
+  });
 })
 
 describe("bin/cssjoin",function(){
@@ -106,14 +150,7 @@ describe("lib/cssjoin",function(){
   it("Twice time called")
 })
 
-describe("lib/CssJoin Object", function () {
-  it("path option ", function(){
-    var CssJoin = cssJoin("", {paths : "/tmp"}, function(){});
-    assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
-    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
-                    ["./test/fixture/simple","/tmp"]);
-  });
-});
+
 
 
 describe("util", function(){

@@ -16,9 +16,21 @@ in node.js
 ```javascript
 var cssInclude = require('cssInclude');
 
+//without option
 cssInclude("sample.css",function(err,extendedCss){
   console.log(extendedCss);
 });
+
+// with option
+cssInclude("sample.css"
+  ,{
+    "paths" : "./include/path"
+  }
+  ,function(err,extendedCss){
+    console.log(extendedCss);
+  }
+);
+
 
 ```
 
@@ -52,4 +64,10 @@ $ node bin/css-inclde.js main.css
 .main{
   float: left;
 }
+```
+
+## Options
+#### -p --include-paths
+```sh
+
 ```
