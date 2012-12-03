@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha test --reporter spec",
-    "testd": "node node_modules/mocha/bin/mocha test -w -b --reporter nyan "
+    "testd": "node node_modules/mocha/bin/mocha test -w -b -d --reporter nyan ",
   },
   "repository": {
     "type": "git",
