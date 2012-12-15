@@ -53,7 +53,7 @@ dir/parts.css
 
 ####And execute
 ```sh
-$ node bin/css-inclde.js main.css
+$ cssjoin main.css
 ```
 ### Output
 ```css
@@ -68,6 +68,15 @@ $ node bin/css-inclde.js main.css
 
 ## Options
 #### -p --include-paths
+Add @import paths.
 ```sh
-
+$ cssjoin some.css -p /include/path
+```
+if need set some paths can use separator **":"**
+```sh
+$ cssjoin some.css -p /include/path:/include/path2:/include/path3
+```
+or on windows, use separator **";"**
+```sh
+$ cssjoin some.css -p C:\\include\\path\\;C:\\include\\path2\\;C:\\include\\path3\\;
 ```
