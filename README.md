@@ -14,15 +14,15 @@ $ cssjoin some.css
 
 in node.js
 ```javascript
-var cssInclude = require('cssInclude');
+var cssjoin = require('cssjoin');
 
 //without option
-cssInclude("sample.css",function(err,extendedCss){
+cssjoin("sample.css",function(err,extendedCss){
   console.log(extendedCss);
 });
 
 // with option
-cssInclude("sample.css"
+cssjoin("sample.css"
   ,{
     "paths" : "./include/path"
   }
