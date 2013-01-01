@@ -15,13 +15,13 @@ program
   .parse(process.argv);
 
 var cssjoin = require("../lib/cssjoin.js");
-var paths = program.path || program.includePath 
+var paths = program.path || program.includePath
 var options = {
   paths : paths
 };
 cssjoin(program.args[0],options, function(err,result){
   if(err){
-    process.stderr.write(err + "\n"); 
+    process.stderr.write(err + "\n");
   }else{
     process.stdout.write(result);
   }
