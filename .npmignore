@@ -1,0 +1,7 @@
+node_modules
+test/*
+*.sublime*
+memo/*
+grunt.js
+.npmignore
+.travis.yml
