@@ -1,4 +1,4 @@
-#CssJoin
+#CssJoin[![Build Status](https://travis-ci.org/suisho/cssjoin.png)](https://travis-ci.org/suisho/ccsjoin)
 Join css that @import syntax loaded file.
 
 ##Install
