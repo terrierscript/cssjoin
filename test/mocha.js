@@ -6,6 +6,7 @@ var cp = require("child_process");
 var os = require("os");
 
 var cssJoin = require("../lib/cssjoin.js");
+//  var cssJoin = require("../");
 
 var read = function(path){
   return fs.readFileSync(path,'utf-8');
@@ -16,16 +17,20 @@ var isWindows = function(){
 }
 
 describe("lib/CssJoin Object", function () {
-  it("path option ", function(){
+  it("none path option ", function(){
     // none
     var CssJoin = cssJoin("", {}, function(){});
     assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
                     ["./test/fixture/simple"]);
+  });
+  it("string path option ", function(){
     // string
     var CssJoin = cssJoin("", {paths : "/tmp"}, function(){});
     assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
     assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
                     ["./test/fixture/simple","/tmp"]);
+  });
+  it("array path option ", function(){
     // array 
     var CssJoin = cssJoin("", {paths : ["/tmp"]}, function(){});
     assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
@@ -44,7 +49,7 @@ describe("resolve path", function(){
         ["test/fixture/resolve_path/input/htdocs"],
         ["test/fixture/resolve_path/input/htdocs/"],
         [".","./test/fixture/resolve_path/input/htdocs/"],
-        ["./test/fixture/resolve_path/input","./test/fixture/resolve_path/input/htdocs/"],
+        ["./test/fixture/resolve_path/input","./test/fixture/resolve_path/input/htdocs/"]
       ];
       var expected = "test/fixture/resolve_path/input/htdocs/parts.css";
       if(isWindows()){
@@ -67,7 +72,7 @@ describe("resolve path", function(){
       var opt = {
         paths : [
           "./test/fixture/resolve_path/input/htdocs",
-          "./test/fixture/resolve_path/input/htdocs2",
+          "./test/fixture/resolve_path/input/htdocs2"
         ]
       };
       cssJoin("./test/fixture/resolve_path/input/main.css", opt, 
@@ -83,13 +88,14 @@ describe("resolve path", function(){
     var command = [
       "node",
       "bin/cssjoin.js",
-      "./test/fixture/resolve_path/input/main.css",
+      "./test/fixture/resolve_path/input/main.css"
     ]
+    var paths;
     if(isWindows()){
-      var paths = "./test/fixture/resolve_path/input/htdocs;"
+      paths = "./test/fixture/resolve_path/input/htdocs;"
                 +"./test/fixture/resolve_path/input/htdocs2";
     }else{
-      var paths = "./test/fixture/resolve_path/input/htdocs:"
+      paths = "./test/fixture/resolve_path/input/htdocs:"
                 +"./test/fixture/resolve_path/input/htdocs2";
     }
     var params = ["-p","--path","--include-path"];
@@ -127,7 +133,7 @@ describe("lib/cssjoin",function(){
       done();
     });
   });
-  it("Execute with option",function(done){
+  it("Execute with empty option",function(done){
     cssJoin("./test/fixture/basic/input/main.css",{}, function(err,result){
       var expect = read("./test/fixture/basic/output/main.css");
       assert.equal(expect, result);
@@ -157,9 +163,6 @@ describe("lib/cssjoin",function(){
   it("Twice time called")
 })
 
-
-
-
 describe("util", function(){
   it("css removing comment simple", function(){    
     assert.equal( utils._removeComment("/* aa */ bb")," bb");
@@ -167,15 +170,15 @@ describe("util", function(){
   });
   it("css removing comment return code", function(){
     // remove css
-    var input = "/* hoge\n"+
-    "age\n"+
-    "*/\n"+
-    "/* hoge\n\r"+
-    "age\n\r"+
-    "nr */\n\r"+
-    "boke\n"+
-    "uga\n"+
-    "/* fuga */";
+    var input = "/* hoge\n"
+              + "age\n"
+              + "*/\n"
+              + "/* hoge\n\r"
+              + "age\n\r"
+              + "nr */\n\r"
+              + "boke\n"
+              + "uga\n"
+              + "/* fuga */";
     var expect = "\n"
                +"\n\rboke\n"
                +"uga\n";
@@ -188,7 +191,7 @@ describe("util", function(){
     var result = utils.getReplaceMap(css,[path.dirname(cssFilePath)])
       var expect = {
         '@import "parts.css";' : "./test/fixture/replace_map_test/dir/parts.css",
-        '@import "../base.css";' : "./test/fixture/replace_map_test/base.css",
+      '@import "../base.css";' : "./test/fixture/replace_map_test/base.css"
       }
       //assert length
       assert.equal(expect.length, result.length);
@@ -197,5 +200,4 @@ describe("util", function(){
         assert.equal(path.resolve(expect[key]),path.resolve(result[key]));
       }
     });
-  });
 })
