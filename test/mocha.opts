@@ -1,3 +1,4 @@
 -r should
--G 
+-G
+-b
 --reporter nyan

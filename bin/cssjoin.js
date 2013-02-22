@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 var os = require("os");
-
 function list(val) {
   // @see less.js/bin/lessc
   return val.split(os.type().match(/Windows/) ? ';' : ':')
