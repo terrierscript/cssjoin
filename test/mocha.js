@@ -134,6 +134,13 @@ describe("lib/cssjoin",function(){
       done();
     });
   });
+  it("Execute with option not destructive",function(done){
+    var opt = {paths : "/hoge"};
+    cssJoin("./test/fixture/basic/input/main.css",opt, function(err,result){
+      assert.deepEqual(opt, {paths : "/hoge"});
+      done();
+    });
+  });
   it("Can't resolve @import test", function(done){
     cssJoin("./test/fixture/cannot_import/input/main.css", 
       function(err ,result){
