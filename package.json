@@ -10,7 +10,8 @@
     "test": "test"
   },
   "dependencies": {
-    "commander": "~1.1.1"
+    "commander": "~1.1.1",
+    "clone": "~0.1.5"
   },
   "devDependencies": {
     "mocha": "~1.7.3",
