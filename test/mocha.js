@@ -52,13 +52,13 @@ describe("resolve path", function(){
       }
       for(var i=0; i < fileNamePattern.length; i++){
         for(var j=0; j < resolvePathPattern.length; j++){
-          var result = utils.resolvePath(fileNamePattern[i], resolvePathPattern[j]);
+          var result = utils._resolvePath(fileNamePattern[i], resolvePathPattern[j]);
           assert.equal(result, expected);
         }
       }
     });
     it("cant resolve pattern", function(){
-      var result = utils.resolvePath("not.css",["./test/fixture/unknown"]);
+      var result = utils._resolvePath("not.css",["./test/fixture/unknown"]);
       assert.equal(result, null);
     })
   });
@@ -154,17 +154,9 @@ describe("lib/cssjoin",function(){
 
 
 describe("util", function(){
-  
-  it("Clone array",function(){
-    var a = [1,2,3];
-    var b = utils.cloneArray(a);
-    b[0] = 4;
-    assert.deepEqual(a, [1,2,3]);
-    assert.deepEqual(b, [4,2,3]);
-  });
   it("css removing comment simple", function(){    
-    assert.equal( utils.removeComment("/* aa */ bb")," bb");
-    assert.equal( utils.removeComment("/* aa */ bb /* cc */")," bb ");
+    assert.equal( utils._removeComment("/* aa */ bb")," bb");
+    assert.equal( utils._removeComment("/* aa */ bb /* cc */")," bb ");
   });
   it("css removing comment return code", function(){
     // remove css
@@ -180,11 +172,13 @@ describe("util", function(){
     var expect = "\n"
                +"\n\rboke\n"
                +"uga\n";
-    var result = utils.removeComment(input);
+    var result = utils._removeComment(input);
     assert.equal(result,expect)
   });
   it("Replace map",function(){
-    utils.getReplaceMapByFile("./test/fixture/replace_map_test/dir/replace_map.css",[],function(err,result){
+    var cssFilePath = "./test/fixture/replace_map_test/dir/replace_map.css"
+    var css = fs.readFileSync(cssFilePath, "utf-8");
+    var result = utils.getReplaceMap(css,[path.dirname(cssFilePath)])
       var expect = {
         '@import "parts.css";' : "./test/fixture/replace_map_test/dir/parts.css",
         '@import "../base.css";' : "./test/fixture/replace_map_test/base.css",
