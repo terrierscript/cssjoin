@@ -4,7 +4,7 @@ var path = require("path");
 var fs = require("fs");
 var cp = require("child_process");
 var os = require("os");
-
+var rewire = require("rewire");
 var cssJoin = require("../lib/cssjoin.js");
 //  var cssJoin = require("../");
 
@@ -37,6 +37,7 @@ describe("lib/CssJoin Object", function () {
     assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
                     ["./test/fixture/simple","/tmp"]);
   });
+
 });
 
 describe("resolve path", function(){
@@ -156,6 +157,33 @@ describe("lib/cssjoin",function(){
       }
     );
   });
+  it("url @import ", function(done){
+    cssJoin("./test/fixture/exist_url/input/main.css",
+      function(err ,result){
+        var expect = read("./test/fixture/exist_url/output/main.css");
+        assert.equal(expect, result);
+        done();
+      }
+    );
+  });
+  it("url single quate @import ", function(done){
+    cssJoin("./test/fixture/exist_url_single_quate/input/main.css",
+      function(err ,result){
+        var expect = read("./test/fixture/exist_url_single_quate/output/main.css");
+        assert.equal(expect, result);
+        done();
+      }
+    );
+  });
+  it("url double quate @import ", function(done){
+    cssJoin("./test/fixture/exist_url_double_quate/input/main.css",
+      function(err ,result){
+        var expect = read("./test/fixture/exist_url_double_quate/output/main.css");
+        assert.equal(expect, result);
+        done();
+      }
+    );
+  });
   
   it("Throw error option when can't resolve @import")  
   it("Create Map")
@@ -199,5 +227,14 @@ describe("util", function(){
       for(var key in expect){
         assert.equal(path.resolve(expect[key]),path.resolve(result[key]));
       }
-    });
+  });
+  it("findImportFile", function(){
+    var utils = rewire("../lib/util.js");
+    var findImportFile = utils.__get__("findImportFile");
+    assert.equal(findImportFile("@import url(./path.css)"), "./path.css");
+    assert.equal(findImportFile("@import url('./path.css')"), "./path.css");
+    assert.equal(findImportFile('@import url("./path.css")'), "./path.css");
+    assert.equal(findImportFile("@import './path.css'"), "./path.css");
+    assert.equal(findImportFile('@import "./path.css"'), "./path.css");
+  })
 })
