@@ -184,6 +184,13 @@ describe("lib/cssjoin",function(){
       }
     );
   });
+  it("adjusts relative references to external resources",function(done){
+    cssJoin("./test/fixture/resource/input/main.css", function(err,result){
+      var expect = read("./test/fixture/resource/output/main.css");
+      assert.equal(expect, result);
+      done();
+    });
+  });
   
   it("Throws an error option when it can't resolve an @import")  
   it("Creates a Map")
@@ -216,7 +223,7 @@ describe("util", function(){
   it("creates replace maps",function(){
     var cssFilePath = "./test/fixture/replace_map_test/dir/replace_map.css"
     var css = fs.readFileSync(cssFilePath, "utf-8");
-    var result = utils.getReplaceMap(css,[path.dirname(cssFilePath)])
+    var result = utils.getReplaceMap(css,[path.dirname(cssFilePath)]).imports
       var expect = {
         '@import "parts.css";' : "./test/fixture/replace_map_test/dir/parts.css",
       '@import "../base.css";' : "./test/fixture/replace_map_test/base.css"
