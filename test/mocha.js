@@ -185,11 +185,13 @@ describe("lib/cssjoin",function(){
     );
   });
   it("adjusts relative references to external resources",function(done){
-    cssJoin("./test/fixture/resource/input/main.css", function(err,result){
-      var expect = read("./test/fixture/resource/output/main.css");
-      assert.equal(result, expect);
-      done();
-    });
+    cssJoin("./test/fixture/url_resource/input/main.css",
+      function(err,result){
+        var expect = read("./test/fixture/url_resource/output/main.css");
+        assert.equal(result, expect);
+        done();
+      }
+    );
   });
   
   it("Throws an error option when it can't resolve an @import")  
