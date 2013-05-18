@@ -79,7 +79,7 @@ describe("resolve path", function(){
       cssJoin("./test/fixture/resolve_path/input/main.css", opt, 
         function(err ,result){
           var expect = read("./test/fixture/resolve_path/output/main.css");
-          assert.equal(expect, result);
+          assert.equal(result, expect);
           done();
         }
       );
@@ -106,7 +106,7 @@ describe("resolve path", function(){
         //console.log(_command);
         cp.exec(_command,function(error, stdout, stderr){
           var expect = read("./test/fixture/resolve_path/output/main.css");
-          assert.equal(stdout,expect);
+          assert.equal(stdout, expect);
           done();
         });
       });
@@ -119,7 +119,7 @@ describe("bin/cssjoin",function(){
     cp.exec("node bin/cssjoin.js ./test/fixture/basic/input/main.css",
       function(error, stdout, stderr){
         var expect = read("./test/fixture/basic/output/main.css");
-        assert.equal(expect,stdout);
+        assert.equal(stdout, expect);
         done();
       }
     );
@@ -130,14 +130,14 @@ describe("lib/cssjoin",function(){
   it("Executes with no options",function(done){
     cssJoin("./test/fixture/basic/input/main.css", function(err,result){
       var expect = read("./test/fixture/basic/output/main.css");
-      assert.equal(expect, result);
+      assert.equal(result,expect);
       done();
     });
   });
   it("Executes with empty options",function(done){
     cssJoin("./test/fixture/basic/input/main.css",{}, function(err,result){
       var expect = read("./test/fixture/basic/output/main.css");
-      assert.equal(expect, result);
+      assert.equal(result,expect);
       done();
     });
   });
@@ -170,7 +170,7 @@ describe("lib/cssjoin",function(){
     cssJoin("./test/fixture/exist_url_single_quote/input/main.css",
       function(err ,result){
         var expect = read("./test/fixture/exist_url_single_quote/output/main.css");
-        assert.equal(expect, result);
+        assert.equal(result, expect);
         done();
       }
     );
@@ -179,7 +179,7 @@ describe("lib/cssjoin",function(){
     cssJoin("./test/fixture/exist_url_double_quote/input/main.css",
       function(err ,result){
         var expect = read("./test/fixture/exist_url_double_quote/output/main.css");
-        assert.equal(expect, result);
+        assert.equal(result, expect);
         done();
       }
     );
