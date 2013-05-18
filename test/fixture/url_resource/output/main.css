@@ -1,0 +1,12 @@
+.dir_css{
+  color : red;
+}
+.dir_css{
+  background-image: url("dir/img/down.gif");
+}
+.parts {
+  background-image: url("dir/img/down.gif");
+}
+.main{
+  float: left;
+}
