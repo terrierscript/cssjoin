@@ -33,7 +33,7 @@
     "extend"
   ],
   "author": "suisho",
-  "license": "BSD",
+  "license": "MIT",
   "readmeFilename": "README.md",
   "optionalDependencies": {},
   "engines": {
