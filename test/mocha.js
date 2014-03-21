@@ -201,27 +201,6 @@ describe("lib/cssjoin",function(){
 })
 
 describe("util", function(){
-  it("removes simple css comments", function(){    
-    assert.equal( utils._removeComments("/* aa */ bb")," bb");
-    assert.equal( utils._removeComments("/* aa */ bb /* cc */")," bb ");
-  });
-  it("removes css comment return codes", function(){
-    // remove css
-    var input = "/* hoge\n"
-              + "age\n"
-              + "*/\n"
-              + "/* hoge\n\r"
-              + "age\n\r"
-              + "nr */\n\r"
-              + "boke\n"
-              + "uga\n"
-              + "/* fuga */";
-    var expect = "\n"
-               +"\n\rboke\n"
-               +"uga\n";
-    var result = utils._removeComments(input);
-    assert.equal(result,expect)
-  });
   it("creates replace maps",function(){
     var cssFilePath = "./test/fixture/replace_map_test/dir/replace_map.css"
     var css = fs.readFileSync(cssFilePath, "utf-8");
