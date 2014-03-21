@@ -13,7 +13,8 @@
     "commander": "~1.1.1",
     "clone": "~0.1.5",
     "css-parse": "~1.7.0",
-    "css": "^1.6.0"
+    "css": "^1.6.0",
+    "css-value": "0.0.1"
   },
   "devDependencies": {
     "mocha": "~1.7.3",
