@@ -217,8 +217,8 @@ describe("util", function(){
       }
   });
   it("finds import files", function(){
-    var utils = rewire("../lib/util.js");
-    var findImportFile = utils.__get__("findImportFile");
+    var legacy = rewire("../lib/legacy.js");
+    var findImportFile = legacy.findImportFile
     assert.equal(findImportFile("@import url(./path.css)"), "./path.css");
     assert.equal(findImportFile("@import url('./path.css')"), "./path.css");
     assert.equal(findImportFile('@import url("./path.css")'), "./path.css");
