@@ -185,9 +185,9 @@ describe("lib/cssjoin",function(){
     );
   });
   it("Handles url @import with query ", function(done){
-    cssJoin("./test/fixture/exist_url_double_quote/input/main.css",
+    cssJoin("./test/fixture/url_with_query/input/main.css",
       function(err ,result){
-        var expect = read("./test/fixture/exist_url_double_quote/output/main.css");
+        var expect = read("./test/fixture/url_with_query/output/main.css");
         assert.equal(result, expect);
         done();
       }
