@@ -202,6 +202,15 @@ describe("lib/cssjoin",function(){
       }
     );
   });
+  it("Font family is ignored",function(done){
+    cssJoin("./test/fixture/font-family/input/main.css",
+      function(err,result){
+        var expect = read("./test/fixture/font-family/output/main.css");
+        assert.equal(result, expect);
+        done();
+      }
+    );
+  });
 
   it("Throws an error option when it can't resolve an @import")
   it("Creates a Map")
