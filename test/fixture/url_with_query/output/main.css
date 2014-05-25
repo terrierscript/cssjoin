@@ -1,4 +1,8 @@
-@import url(./parts.css?foo=baz);
+.block{
+  color:red;
+}
+
+@import url(./parts_with_query.css?foo=baz);
 
 .main{
   float: left;

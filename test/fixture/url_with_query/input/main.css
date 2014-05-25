@@ -1,4 +1,5 @@
-@import url(./parts.css?foo=baz);
+@import url(./parts.css);
+@import url(./parts_with_query.css?foo=baz);
 
 .main{
   float: left;
