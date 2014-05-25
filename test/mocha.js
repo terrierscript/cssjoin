@@ -20,21 +20,21 @@ describe("lib/CssJoin Object", function () {
   it("accepts no path option ", function(){
     // none
     var CssJoin = cssJoin("", {}, function(){});
-    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"),
                     ["./test/fixture/simple"]);
   });
   it("accepts a string path option ", function(){
     // string
     var CssJoin = cssJoin("", {paths : "/tmp"}, function(){});
     assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
-    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"),
                     ["./test/fixture/simple","/tmp"]);
   });
   it("accepts an array path option ", function(){
-    // array 
+    // array
     var CssJoin = cssJoin("", {paths : ["/tmp"]}, function(){});
     assert.deepEqual(CssJoin.getPaths(), ["/tmp"]);
-    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"), 
+    assert.deepEqual(CssJoin.getPaths("./test/fixture/simple/input.css"),
                     ["./test/fixture/simple","/tmp"]);
   });
 
@@ -76,7 +76,7 @@ describe("resolve path", function(){
           "./test/fixture/resolve_path/input/htdocs2"
         ]
       };
-      cssJoin("./test/fixture/resolve_path/input/main.css", opt, 
+      cssJoin("./test/fixture/resolve_path/input/main.css", opt,
         function(err ,result){
           var expect = read("./test/fixture/resolve_path/output/main.css");
           assert.equal(result, expect);
@@ -149,7 +149,7 @@ describe("lib/cssjoin",function(){
     });
   });
   it("Can't resolve @import test", function(done){
-    cssJoin("./test/fixture/cannot_import/input/main.css", 
+    cssJoin("./test/fixture/cannot_import/input/main.css",
       function(err ,result){
         var expect = read("./test/fixture/cannot_import/output/main.css");
         assert.equal(expect, result);
@@ -184,6 +184,15 @@ describe("lib/cssjoin",function(){
       }
     );
   });
+  it("Handles url @import with query ", function(done){
+    cssJoin("./test/fixture/exist_url_double_quote/input/main.css",
+      function(err ,result){
+        var expect = read("./test/fixture/exist_url_double_quote/output/main.css");
+        assert.equal(result, expect);
+        done();
+      }
+    );
+  });
   it("adjusts relative references to external resources",function(done){
     cssJoin("./test/fixture/url_resource/input/main.css",
       function(err,result){
@@ -193,15 +202,15 @@ describe("lib/cssjoin",function(){
       }
     );
   });
-  
-  it("Throws an error option when it can't resolve an @import")  
+
+  it("Throws an error option when it can't resolve an @import")
   it("Creates a Map")
   it("Extend Test")
   it("Twice time called")
 })
 
 describe("util", function(){
-  it("removes simple css comments", function(){    
+  it("removes simple css comments", function(){
     assert.equal( utils._removeComments("/* aa */ bb")," bb");
     assert.equal( utils._removeComments("/* aa */ bb /* cc */")," bb ");
   });
